@@ -1,4 +1,5 @@
-import hero from "./hero.js";
+import Obstacle from "./obstacle.js";
+import Hero from "./hero.js";
 const btn = document.querySelector("div");
 const canvas = document.getElementById("CANVAS_1");
 const ctx = canvas.getContext("2d");
@@ -9,7 +10,7 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 let ani;
 
 function start() {
-  hero.y = 250;
+  const hero = new Hero(ctx);
   let jump = false;
   let jumpState = true;
   let run = true;
@@ -23,25 +24,12 @@ function start() {
   let timer = 0;
   let obstacleArr = [];
 
-  class Obstacle {
-    constructor() {
-      this.x = 450;
-      this.y = 450;
-      this.width = 50;
-      this.height = 50;
-    }
-    draw() {
-      ctx.fillStyle = "red";
-      ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-  }
-
   function drawDynamicImage() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ani = requestAnimationFrame(drawDynamicImage);
     timer++;
-    if (timer % 60 === 0) {
-      const obstacle = new Obstacle();
+    if (timer % 120 === 0) {
+      const obstacle = new Obstacle(ctx);
       obstacleArr.push(obstacle);
     }
     obstacleArr.forEach((v, i, arr) => {
@@ -57,9 +45,9 @@ function start() {
     const sY = Math.floor(spriteFrames[frameIdx] / 6) * 366;
     handleJump();
     if (run === true) {
-      hero.draw(ctx, sX, sY);
+      hero.draw(sX, sY);
     } else {
-      hero.draw(ctx, 3 * 266, 3 * 366);
+      hero.draw(3 * 266, 3 * 366);
     }
     if (frameIdx == 0) {
       frameIdx = 24;
@@ -101,12 +89,7 @@ function start() {
   });
 }
 
-// btn.addEventListener("click", function () {
-//   ctx.clearRect(0, 0, canvas.width, canvas.height);
-// });
-
 btn.addEventListener("click", function () {
   cancelAnimationFrame(ani);
   start();
-  // console.log(obstacleArr);
 });

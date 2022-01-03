@@ -3,14 +3,17 @@
 const heroImg = new Image();
 heroImg.src = "ca.png";
 
-const hero = {
+class Hero {
   //주인공 셋팅
-  x: 20,
-  y: 250,
-  width: 150,
-  height: 250,
-  draw(ctx, sX, sY) {
-    ctx.drawImage(
+  constructor(ctx) {
+    this.x = 20;
+    this.y = 250;
+    this.width = 150;
+    this.height = 250;
+    this.ctx = ctx;
+  }
+  draw(sX, sY) {
+    this.ctx.drawImage(
       heroImg,
       sX,
       sY,
@@ -21,10 +24,10 @@ const hero = {
       this.width,
       this.height
     );
-    ctx.beginPath();
-    ctx.moveTo(this.x, this.y + this.height);
-    ctx.lineTo(this.x + this.width, this.y + this.height);
-    ctx.stroke();
-  },
-};
-export default hero;
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.x, this.y + this.height);
+    this.ctx.lineTo(this.x + this.width, this.y + this.height);
+    this.ctx.stroke();
+  }
+}
+export default Hero;
