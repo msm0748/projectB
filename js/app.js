@@ -61,11 +61,12 @@ function start() {
   draw();
 
   function crash(hero, obstacle) {
-    const x = obstacle.x - hero.x;
+    const x = obstacle.x - (hero.x + hero.width);
     const x2 = x + obstacle.width; // x값 통과하고 지나칠 때
-    const y = obstacle.y - hero.y;
-    const distance = Math.sqrt(x * x + y * y); // 이해 안됨
-    if (distance < hero.width) {
+    const y = obstacle.y - (hero.y + hero.height);
+    const y2 = y + obstacle.height;
+    // const distance = Math.sqrt(x * x + y * y); // 이해 안됨
+    if (x2 > -hero.width && x < 0 && y < 0 && y2 > -hero.height) {
       cancelAnimationFrame(ani);
       btn.removeAttribute("disabled");
     }

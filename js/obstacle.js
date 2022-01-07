@@ -5,7 +5,7 @@ class Obstacle {
   constructor(ctx, speed) {
     this.pngWidth = 454;
     this.pngHeight = 500;
-    this.width = 100;
+    this.width = 150;
     this.height = 100;
     this.x = canvas.width - this.width;
     this.y = Math.floor(Math.random() * (canvas.height - this.height));

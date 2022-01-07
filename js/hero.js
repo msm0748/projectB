@@ -7,7 +7,7 @@ class Hero {
   constructor(ctx) {
     this.pngWidth = 443;
     this.pngHeight = 234;
-    this.width = 100;
+    this.width = 150;
     this.height = 100;
     this.x = 20; // 시작 위치
     this.y = canvas.height / 2 - this.height / 2; // 시작 위치
