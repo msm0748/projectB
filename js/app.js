@@ -6,7 +6,6 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const point = document.getElementById("point");
 point.innerText = 0;
-// heroImg.src = "http://cfile3.uf.tistory.com/image/275A984253187A1311F1EB";
 let ani;
 
 function start() {
@@ -34,19 +33,6 @@ function start() {
         obstacleArr[i].draw();
       }
     }
-
-    // obstacleArr.forEach((v, i, arr) => {
-    //   if (v.x < 0) {
-    //     setTimeout(() => {
-    //       arr.splice(i, 1);
-    //     }, 0);
-    //   }
-    //   crash(hero, v);
-    //   v.x -= 5;
-    //   v.draw();
-    // });
-
-    // console.log(obstacleArr);
   }
   function draw() {
     ani = requestAnimationFrame(draw);
@@ -61,26 +47,36 @@ function start() {
   draw();
 
   function crash(hero, obstacle) {
-    const x = obstacle.x - (hero.x + hero.width);
-    const x2 = x + obstacle.width; // x값 통과하고 지나칠 때
-    const y = obstacle.y - (hero.y + hero.height);
-    const y2 = y + obstacle.height;
-    // const distance = Math.sqrt(x * x + y * y); // 이해 안됨
-    if (x2 > -hero.width && x < 0 && y < 0 && y2 > -hero.height) {
+    const x = obstacle.x - hero.maxX;
+    const x2 = hero.x - obstacle.maxX;
+    const y = obstacle.y - hero.maxY;
+    const y2 = hero.y - obstacle.maxY;
+    // console.log(hero.x, obstacle.maxX);
+    // console.log(`장애물 : ${obstacle.x} 히어로 : ${hero.maxX} y2 : ${y2}`);
+    if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {
       cancelAnimationFrame(ani);
       btn.removeAttribute("disabled");
     }
   }
   document.addEventListener("keydown", function (e) {
     if (e.code === "ArrowUp") {
-      if (hero.y > 0) {
+      if (hero.y > 10) {
         hero.up = true;
       }
     }
     if (e.code === "ArrowDown") {
-      if (hero.y + hero.height < canvas.height) {
-        // bottom 값으로 설정시 -5px로 가버림
+      if (hero.maxY < canvas.height - 20) {
         hero.down = true;
+      }
+    }
+    if (e.code === "ArrowLeft") {
+      if (hero.x > 10) {
+        hero.left = true;
+      }
+    }
+    if (e.code === "ArrowRight") {
+      if (hero.maxX < canvas.width - 20) {
+        hero.right = true;
       }
     }
   });
@@ -90,6 +86,12 @@ function start() {
     }
     if (e.code === "ArrowDown") {
       hero.down = false;
+    }
+    if (e.code === "ArrowLeft") {
+      hero.left = false;
+    }
+    if (e.code === "ArrowRight") {
+      hero.right = false;
     }
   });
 }

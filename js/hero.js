@@ -5,13 +5,14 @@ heroImg.src = "../png/sp.png";
 class Hero {
   //주인공 셋팅
   constructor(ctx) {
+    this.ctx = ctx;
     this.pngWidth = 443;
     this.pngHeight = 234;
-    this.width = 150;
-    this.height = 100;
+    this.width = 100;
+    this.height = 50;
     this.x = 20; // 시작 위치
     this.y = canvas.height / 2 - this.height / 2; // 시작 위치
-    this.ctx = ctx;
+
     this.spriteFrames = [];
     this.frameIdx = 0;
     for (let i = 0; i < 2; i++) {
@@ -19,29 +20,39 @@ class Hero {
     }
     this.up = false;
     this.down = false;
+    this.left = false;
+    this.right = false;
     this.imgSpeed = 0;
     this.upDownSpeed = 10;
   }
   update() {
-    // this.bottom = canvas.height - (this.y + this.height);
+    this.maxX = this.x + this.width;
+    this.maxY = this.y + this.height;
     this.imgSpeed++;
     if (this.up === true) {
       this.y -= this.upDownSpeed;
-      if (this.y === 0) {
+      if (this.y <= 10) {
         this.up = false;
       }
     }
     if (this.down === true) {
       this.y += this.upDownSpeed;
-      if (this.y + this.height === canvas.height) {
-        // bottom 값으로 설정시 -5px로 가버림
+      if (this.maxY >= canvas.height - 20) {
         this.down = false;
       }
     }
-    // console.log("top :", this.y);
-    // console.log("bottom :", this.bottom);
-    // if(this.imgSpeed % 4 === 0){
-    // }
+    if (this.left === true) {
+      this.x -= this.upDownSpeed;
+      if (this.x <= 10) {
+        this.left = false;
+      }
+    }
+    if (this.right === true) {
+      this.x += this.upDownSpeed;
+      if (this.maxX >= canvas.width - 20) {
+        this.right = false;
+      }
+    }
     this.frameIdx++;
     if (this.frameIdx === 2) {
       this.frameIdx = 0;
