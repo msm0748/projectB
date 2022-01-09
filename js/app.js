@@ -54,7 +54,7 @@ function start() {
     // console.log(hero.x, obstacle.maxX);
     // console.log(`장애물 : ${obstacle.x} 히어로 : ${hero.maxX} y2 : ${y2}`);
     if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {
-      cancelAnimationFrame(ani);
+      // cancelAnimationFrame(ani);
       btn.removeAttribute("disabled");
     }
   }
