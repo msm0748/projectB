@@ -22,13 +22,14 @@ class Hero {
     this.down = false;
     this.left = false;
     this.right = false;
-    this.imgSpeed = 0;
+    this.frameSpeed = 0;
     this.upDownSpeed = 10;
+    this.heroImg = heroImg;
   }
   update() {
     this.maxX = this.x + this.width;
     this.maxY = this.y + this.height;
-    this.imgSpeed++;
+    this.frameSpeed++;
     if (this.up === true) {
       this.y -= this.upDownSpeed;
       if (this.y <= 10) {
@@ -53,14 +54,16 @@ class Hero {
         this.right = false;
       }
     }
-    this.frameIdx++;
+    if (this.frameSpeed % 4 === 0){
+      this.frameIdx++;
+    }
     if (this.frameIdx === 2) {
       this.frameIdx = 0;
     }
   }
   draw() {
     this.ctx.drawImage(
-      heroImg,
+      this.heroImg,
       Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.pngWidth,
       Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.pngHeight,
       this.pngWidth,

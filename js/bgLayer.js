@@ -10,7 +10,6 @@ class BgLayer {
     this.x2 = this.bgWidth - this.speed;
   }
   update() {
-    console.log(this.x, this.x2);
     if (this.x <= -this.bgWidth) {
       this.x = this.bgWidth + this.x2 - this.speed;
     }
