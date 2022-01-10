@@ -13,7 +13,7 @@ function start() {
   point.innerText = 0;
   const hero = new Hero(ctx);
   const bgLayer = new BgLayer(ctx);
-  let shield = false;
+  // let shieldState = false;
   let timer = 0;
   let obstacleArr = [];
   let itemArr = [];
@@ -21,18 +21,20 @@ function start() {
 
   function handleItem() {
     // console.log(Math.floor(Math.random() * 6) + 150);
-    if (timer % 500 === 0) {
+    if (timer % 50 === 0) {
       const item = new Shield(ctx, Math.floor(Math.random() * 6) + 3);
       itemArr.push(item);
     }
     for (let i = 0; i < itemArr.length; i++) {
-      if (itemArr[i].x < -20) { // 좌측 화면에서 -20px 나가면 배열에서 삭제
+      if (itemArr[i].x < -20) {
+        // 좌측 화면에서 -20px 나가면 배열에서 삭제
         itemArr.splice(i, 1);
       }
-      if (itemArr[i]) { // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지
+      if (itemArr[i]) {
+        // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지
+        itemArr[i].itemCrash(hero, itemArr, i);
         itemArr[i].update();
         itemArr[i].draw();
-        itemCrash(hero, itemArr[i], i);
       }
     }
   }
@@ -44,13 +46,16 @@ function start() {
     }
 
     for (let i = 0; i < obstacleArr.length; i++) {
-      if (obstacleArr[i].x < -20) { // 좌측 화면에서 -20px 나가면 배열에서 삭제
+      if (obstacleArr[i].x < -20) {
+        // 좌측 화면에서 -20px 나가면 배열에서 삭제
         obstacleArr.splice(i, 1);
         pointNumber++;
         point.innerText = pointNumber;
       }
-      if (obstacleArr[i]) { // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지
-        obstacleCrash(hero, obstacleArr[i]);
+      if (obstacleArr[i]) {
+        // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지
+        obstacleArr[i].obstacleCrash(hero, ani, btn);
+        // obstacleCrash(hero, obstacleArr[i]);
         obstacleArr[i].update();
         obstacleArr[i].draw();
       }
@@ -69,42 +74,6 @@ function start() {
     hero.draw();
   }
   draw();
-
-  function itemCrash(hero, item, i) {
-    const x = item.x - hero.maxX;
-    const x2 = hero.x - item.maxX;
-    const y = item.y - hero.maxY;
-    const y2 = hero.y - item.maxY;
-    if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {
-      shield = true;
-      itemArr.splice(i, 1);
-      hero.heroImg.src = "../png/sp_red.png";
-      console.log("먹음");
-      setTimeout(() => {
-        hero.heroImg.src = "../png/sp0.png";
-      }, 2000);
-      setTimeout(() => {
-        console.log("끝");
-        hero.heroImg.src = "../png/sp.png";
-        shield = false;
-      }, 3000);
-    }
-  }
-
-  function obstacleCrash(hero, obstacle) {
-    const x = obstacle.x - hero.maxX;
-    const x2 = hero.x - obstacle.maxX;
-    const y = obstacle.y - hero.maxY;
-    const y2 = hero.y - obstacle.maxY;
-    if (shield === false) {
-      if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {
-        // hero.heroImg.src = "../png/die.png";
-        // hero.frameIdx = 0;
-        cancelAnimationFrame(ani);
-        btn.removeAttribute("disabled");
-      }
-    }
-  }
 
   document.addEventListener("keydown", function (e) {
     if (e.code === "ArrowUp") {

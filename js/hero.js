@@ -25,6 +25,7 @@ class Hero {
     this.frameSpeed = 0;
     this.upDownSpeed = 10;
     this.heroImg = heroImg;
+    this.shieldState = false;
   }
   update() {
     this.maxX = this.x + this.width;
@@ -54,7 +55,7 @@ class Hero {
         this.right = false;
       }
     }
-    if (this.frameSpeed % 4 === 0){
+    if (this.frameSpeed % 4 === 0) {
       this.frameIdx++;
     }
     if (this.frameIdx === 2) {

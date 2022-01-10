@@ -20,10 +20,11 @@ class Obstacle {
     this.spriteY = 0;
   }
   update() {
-    if([0, 1, 2, 3].includes(this.frameIdx)){ // 이미지 좌표 설정해주기
+    if ([0, 1, 2, 3].includes(this.frameIdx)) {
+      // 이미지 좌표 설정해주기
       this.spriteX = 0;
       this.spriteY = 0;
-    }else{
+    } else {
       // console.log("미포함");
     }
     this.x -= this.speed;
@@ -56,6 +57,18 @@ class Obstacle {
     this.ctx.moveTo(this.x + this.width, this.y);
     this.ctx.lineTo(this.x + this.width, this.y + this.height);
     this.ctx.stroke();
+  }
+  obstacleCrash(hero, ani, btn) {
+    const x = this.x - hero.maxX;
+    const x2 = hero.x - this.maxX;
+    const y = this.y - hero.maxY;
+    const y2 = hero.y - this.maxY;
+    if (hero.shieldState === false) {
+      if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {
+        cancelAnimationFrame(ani);
+        btn.removeAttribute("disabled");
+      }
+    }
   }
 }
 
