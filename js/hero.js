@@ -1,18 +1,20 @@
 const canvas = document.getElementById("canvas");
 const heroImg = new Image();
+const heroShieldImg = new Image();
 heroImg.src = "../png/sp.png";
+heroShieldImg.src = "../png/sp_shield.png";
 
 class Hero {
   //주인공 셋팅
   constructor(ctx) {
     this.ctx = ctx;
     this.pngWidth = 443;
-    this.pngHeight = 234;
+    this.pngHeight = heroImg.height;
+    this.png2Height = heroShieldImg.height;
     this.width = 100;
     this.height = 50;
     this.x = 20; // 시작 위치
     this.y = canvas.height / 2 - this.height / 2; // 시작 위치
-
     this.spriteFrames = [];
     this.frameIdx = 0;
     for (let i = 0; i < 2; i++) {
@@ -25,6 +27,7 @@ class Hero {
     this.frameSpeed = 0;
     this.upDownSpeed = 10;
     this.heroImg = heroImg;
+    this.heroShieldImg = heroShieldImg;
     this.shieldState = false;
   }
   update() {
@@ -63,28 +66,58 @@ class Hero {
     }
   }
   draw() {
-    this.ctx.drawImage(
-      this.heroImg,
-      Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.pngWidth,
-      Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.pngHeight,
-      this.pngWidth,
-      this.pngHeight,
-      this.x,
-      this.y,
-      this.width,
-      this.height
-    );
+    if (this.shieldState === true) {
+      this.ctx.drawImage(
+        this.heroShieldImg,
+        Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.pngWidth,
+        Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.pngHeight,
+        this.pngWidth,
+        this.png2Height,
+        this.x,
+        this.y - this.height / 2,
+        this.width,
+        this.height * 1.9
+      );
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.x, this.y - this.height / 2);
+      this.ctx.lineTo(this.x + this.width, this.y - this.height / 2);
+      this.ctx.moveTo(this.x, this.y - this.height / 2 + this.height * 2);
+      this.ctx.lineTo(
+        this.x + this.width,
+        this.y - this.height / 2 + this.height * 2
+      );
+      this.ctx.moveTo(this.x, this.y - this.height / 2);
+      this.ctx.lineTo(this.x, this.y - this.height / 2 + this.height * 2);
+      this.ctx.moveTo(this.x + this.width, this.y - this.height / 2);
+      this.ctx.lineTo(
+        this.x + this.width,
+        this.y - this.height / 2 + this.height * 2
+      );
+      this.ctx.stroke();
+    } else {
+      this.ctx.drawImage(
+        this.heroImg,
+        Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.pngWidth,
+        Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.pngHeight,
+        this.pngWidth,
+        this.pngHeight,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      );
 
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.x, this.y);
-    this.ctx.lineTo(this.x + this.width, this.y);
-    this.ctx.moveTo(this.x, this.y + this.height);
-    this.ctx.lineTo(this.x + this.width, this.y + this.height);
-    this.ctx.moveTo(this.x, this.y);
-    this.ctx.lineTo(this.x, this.y + this.height);
-    this.ctx.moveTo(this.x + this.width, this.y);
-    this.ctx.lineTo(this.x + this.width, this.y + this.height);
-    this.ctx.stroke();
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.x, this.y);
+      this.ctx.lineTo(this.x + this.width, this.y);
+      this.ctx.moveTo(this.x, this.y + this.height);
+      this.ctx.lineTo(this.x + this.width, this.y + this.height);
+      this.ctx.moveTo(this.x, this.y);
+      this.ctx.lineTo(this.x, this.y + this.height);
+      this.ctx.moveTo(this.x + this.width, this.y);
+      this.ctx.lineTo(this.x + this.width, this.y + this.height);
+      this.ctx.stroke();
+    }
   }
 }
 export default Hero;

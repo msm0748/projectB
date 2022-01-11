@@ -13,34 +13,32 @@ function start() {
   point.innerText = 0;
   const hero = new Hero(ctx);
   const bgLayer = new BgLayer(ctx);
-  // let shieldState = false;
   let timer = 0;
   let obstacleArr = [];
   let itemArr = [];
   let pointNumber = 0;
 
   function handleItem() {
-    // console.log(Math.floor(Math.random() * 6) + 150);
-    if (timer % 50 === 0) {
+    if (timer % 500 === 0) {
       const item = new Shield(ctx, Math.floor(Math.random() * 6) + 3);
       itemArr.push(item);
     }
-    for (let i = 0; i < itemArr.length; i++) {
-      if (itemArr[i].x < -20) {
-        // 좌측 화면에서 -20px 나가면 배열에서 삭제
-        itemArr.splice(i, 1);
-      }
-      if (itemArr[i]) {
-        // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지
-        itemArr[i].itemCrash(hero, itemArr, i);
+    if (itemArr) {
+      // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지
+      for (let i = 0; i < itemArr.length; i++) {
+        if (itemArr[i].x < -20) {
+          // 좌측 화면에서 -20px 나가면 배열에서 삭제
+          itemArr.splice(i, 1);
+        }
         itemArr[i].update();
         itemArr[i].draw();
+        itemArr[i].itemCrash(hero, itemArr, i);
       }
     }
   }
 
   function handleObstacle() {
-    if (timer % 50 === 0) {
+    if (timer % 100 === 0) {
       const obstacle = new Obstacle(ctx, Math.floor(Math.random() * 6) + 3);
       obstacleArr.push(obstacle);
     }

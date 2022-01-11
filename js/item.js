@@ -35,16 +35,16 @@ class Shield {
     const y = this.y - hero.maxY;
     const y2 = hero.y - this.maxY;
     if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {
+      hero.heroShieldImg.src = "../png/sp_shield.png";
       hero.shieldState = true;
       itemArr.splice(i, 1);
-      hero.heroImg.src = "../png/sp_red.png";
       console.log("먹음");
       setTimeout(() => {
-        hero.heroImg.src = "../png/sp0.png";
+        hero.heroShieldImg.src = "../png/sp_shield0.png";
       }, 2000);
       setTimeout(() => {
         console.log("끝");
-        hero.heroImg.src = "../png/sp.png";
+        // hero.heroImg.src = "../png/sp.png";
         hero.shieldState = false;
       }, 3000);
     }
