@@ -26,39 +26,43 @@ function start() {
       const item = new Shield(ctx, Math.floor(Math.random() * 6) + 3);
       itemArr.push(item);
     }
-      for (let i = 0; i < itemArr.length; i++) {
-        if (itemArr[i].x < -20) {
-          // 좌측 화면에서 -20px 나가면 배열에서 삭제
-          itemArr.splice(i, 1);
-        }
-        if(itemArr[i]){
-          // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지
-          itemArr[i].update();
-          itemArr[i].draw();
-          itemArr[i].itemCrash(hero, itemArr, i);
-        }
+    for (let i = 0; i < itemArr.length; i++) {
+      if (itemArr[i].x < -20) {
+        // 좌측 화면에서 -20px 나가면 배열에서 삭제
+        itemArr.splice(i, 1);
       }
+      if (itemArr[i]) {
+        // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지
+        itemArr[i].update();
+        itemArr[i].draw();
+        itemArr[i].itemCrash(hero, itemArr, i);
+      }
+    }
   }
 
   function handleObstacle() {
-    const obRandom = [Math.floor(Math.random() * 50) + 100, Math.floor(Math.random() * 100) + 150, Math.floor(Math.random() * 100) + 50, Math.floor(Math.random() * 100) + 100];
-      if(timer % 200 === 0){
+    const obRandom = [
+      Math.floor(Math.random() * 50) + 100,
+      Math.floor(Math.random() * 100) + 150,
+      Math.floor(Math.random() * 100) + 50,
+      Math.floor(Math.random() * 100) + 100,
+    ];
+    if (timer % 200 === 0) {
       const obstacleYellow = new ObstacleYellow(ctx);
       obstacleArr.push(obstacleYellow);
     }
-      if(timer % 90 === 0){
+    if (timer % 90 === 0) {
       const obstacleBlue = new ObstacleBlue(ctx);
       obstacleArr.push(obstacleBlue);
     }
-      if(timer % 250 === 0){
+    if (timer % 250 === 0) {
       const obstaclePink = new ObstaclePink(ctx);
       obstacleArr.push(obstaclePink);
     }
-      if(timer % 350 === 0){
+    if (timer % 350 === 0) {
       const obstacleBeige = new ObstacleBeige(ctx);
       obstacleArr.push(obstacleBeige);
     }
-
 
     for (let i = 0; i < obstacleArr.length; i++) {
       if (obstacleArr[i].x < -20) {
@@ -91,6 +95,7 @@ function start() {
   draw();
 
   document.addEventListener("keydown", function (e) {
+    e.preventDefault();
     if (e.code === "ArrowUp") {
       if (hero.y > 30) {
         hero.up = true;
@@ -113,6 +118,7 @@ function start() {
     }
   });
   document.addEventListener("keyup", function (e) {
+    e.preventDefault();
     if (e.code === "ArrowUp") {
       hero.up = false;
     }

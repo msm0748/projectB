@@ -5,14 +5,17 @@ class ObstacleBeige {
   constructor(ctx) {
     this.ctx = ctx;
     this.highAndLow = 40;
-    this.pngWidth = obstacleImg.width / 2;
+    this.pngWidth = obstacleImg.width / 3;
     this.pngHeight = obstacleImg.height;
     this.width = 85;
     this.height = 85;
     this.x = canvas.width - this.width;
-    this.y = Math.floor(Math.random() * (canvas.height - this.height - (this.highAndLow * 2))) + this.highAndLow;
+    this.y =
+      Math.floor(
+        Math.random() * (canvas.height - this.height - this.highAndLow * 2)
+      ) + this.highAndLow;
     this.speed = 8;
-    console.log(this.speed)
+    console.log(this.speed);
     this.spriteFrames = [];
     this.frameIdx = 0;
     for (let i = 0; i < 2; i++) {
@@ -27,6 +30,7 @@ class ObstacleBeige {
   }
   update() {
     this.x -= this.speed;
+    this.frameSpeed++;
     if (this.upDown === false) {
       if (this.y > this.minusY) {
         this.y -= 2;
@@ -44,15 +48,14 @@ class ObstacleBeige {
         }
       }
     }
-    this.frameSpeed++;
     this.maxX = this.x + this.width;
     this.maxY = this.y + this.height;
-    // if(this.frameSpeed % 10 === 0){
-    //   this.frameIdx++;
-    // }
-    // if (this.frameIdx === 2) {
-    //   this.frameIdx = 0;
-    // }
+    if (this.frameSpeed % 10 === 0) {
+      this.frameIdx++;
+    }
+    if (this.frameIdx === 2) {
+      this.frameIdx = 0;
+    }
   }
   draw() {
     this.ctx.drawImage(
