@@ -1,4 +1,7 @@
-import Obstacle from "./obstacle.js";
+import ObstacleYellow from "./obstacleYellow.js";
+import ObstacleBlue from "./ObstacleBlue.js";
+import ObstaclePink from "./ObstaclePink.js";
+import ObstacleBeige from "./ObstacleBeige.js";
 import Hero from "./hero.js";
 import BgLayer from "./bgLayer.js";
 import Shield from "./item.js";
@@ -13,7 +16,7 @@ function start() {
   point.innerText = 0;
   const hero = new Hero(ctx);
   const bgLayer = new BgLayer(ctx);
-  let timer = 0;
+  let timer = 250;
   let obstacleArr = [];
   let itemArr = [];
   let pointNumber = 0;
@@ -23,25 +26,39 @@ function start() {
       const item = new Shield(ctx, Math.floor(Math.random() * 6) + 3);
       itemArr.push(item);
     }
-    if (itemArr) {
-      // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지
       for (let i = 0; i < itemArr.length; i++) {
         if (itemArr[i].x < -20) {
           // 좌측 화면에서 -20px 나가면 배열에서 삭제
           itemArr.splice(i, 1);
         }
-        itemArr[i].update();
-        itemArr[i].draw();
-        itemArr[i].itemCrash(hero, itemArr, i);
+        if(itemArr[i]){
+          // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지
+          itemArr[i].update();
+          itemArr[i].draw();
+          itemArr[i].itemCrash(hero, itemArr, i);
+        }
       }
-    }
   }
 
   function handleObstacle() {
-    if (timer % 100 === 0) {
-      const obstacle = new Obstacle(ctx, Math.floor(Math.random() * 6) + 3);
-      obstacleArr.push(obstacle);
+    const obRandom = [Math.floor(Math.random() * 50) + 100, Math.floor(Math.random() * 100) + 150, Math.floor(Math.random() * 100) + 50, Math.floor(Math.random() * 100) + 100];
+      if(timer % 200 === 0){
+      const obstacleYellow = new ObstacleYellow(ctx);
+      obstacleArr.push(obstacleYellow);
     }
+      if(timer % 90 === 0){
+      const obstacleBlue = new ObstacleBlue(ctx);
+      obstacleArr.push(obstacleBlue);
+    }
+      if(timer % 250 === 0){
+      const obstaclePink = new ObstaclePink(ctx);
+      obstacleArr.push(obstaclePink);
+    }
+      if(timer % 350 === 0){
+      const obstacleBeige = new ObstacleBeige(ctx);
+      obstacleArr.push(obstacleBeige);
+    }
+
 
     for (let i = 0; i < obstacleArr.length; i++) {
       if (obstacleArr[i].x < -20) {
@@ -75,22 +92,22 @@ function start() {
 
   document.addEventListener("keydown", function (e) {
     if (e.code === "ArrowUp") {
-      if (hero.y > 10) {
+      if (hero.y > 30) {
         hero.up = true;
       }
     }
     if (e.code === "ArrowDown") {
-      if (hero.maxY < canvas.height - 20) {
+      if (hero.maxY < canvas.height - 40) {
         hero.down = true;
       }
     }
     if (e.code === "ArrowLeft") {
-      if (hero.x > 10) {
+      if (hero.x > 30) {
         hero.left = true;
       }
     }
     if (e.code === "ArrowRight") {
-      if (hero.maxX < canvas.width - 20) {
+      if (hero.maxX < canvas.width - 40) {
         hero.right = true;
       }
     }

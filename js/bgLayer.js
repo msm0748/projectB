@@ -1,10 +1,10 @@
 const canvas = document.getElementById("canvas");
 const bg = new Image();
-bg.src = "../png/BG.png";
+bg.src = "png/bg.png";
 class BgLayer {
   constructor(ctx) {
     this.ctx = ctx;
-    this.speed = 10;
+    this.speed = 5;
     this.bgWidth = bg.width;
     this.x = 0;
     this.x2 = this.bgWidth - this.speed;

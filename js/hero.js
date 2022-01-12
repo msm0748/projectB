@@ -1,8 +1,8 @@
 const canvas = document.getElementById("canvas");
 const heroImg = new Image();
 const heroShieldImg = new Image();
-heroImg.src = "../png/sp.png";
-heroShieldImg.src = "../png/sp_shield.png";
+heroImg.src = "png/sp.png";
+heroShieldImg.src = "png/sp_shield.png";
 
 class Hero {
   //주인공 셋팅
@@ -10,7 +10,6 @@ class Hero {
     this.ctx = ctx;
     this.pngWidth = 443;
     this.pngHeight = heroImg.height;
-    this.png2Height = heroShieldImg.height;
     this.width = 100;
     this.height = 50;
     this.x = 20; // 시작 위치
@@ -25,36 +24,43 @@ class Hero {
     this.left = false;
     this.right = false;
     this.frameSpeed = 0;
-    this.upDownSpeed = 10;
+    this.directionSpeed = 10;
     this.heroImg = heroImg;
+    this.shield();
+  }
+  shield(){
+    this.shieldPngWidth = 510;
+    this.shieldPngHeight = heroShieldImg.height;
     this.heroShieldImg = heroShieldImg;
     this.shieldState = false;
+    this.shieldWidth = 115;
+    this.shieldHeight = this.height * 1.9;
   }
   update() {
     this.maxX = this.x + this.width;
     this.maxY = this.y + this.height;
     this.frameSpeed++;
     if (this.up === true) {
-      this.y -= this.upDownSpeed;
-      if (this.y <= 10) {
+      this.y -= this.directionSpeed;
+      if (this.y <= 30) {
         this.up = false;
       }
     }
     if (this.down === true) {
-      this.y += this.upDownSpeed;
-      if (this.maxY >= canvas.height - 20) {
+      this.y += this.directionSpeed;
+      if (this.maxY >= canvas.height - 40) {
         this.down = false;
       }
     }
     if (this.left === true) {
-      this.x -= this.upDownSpeed;
-      if (this.x <= 10) {
+      this.x -= this.directionSpeed;
+      if (this.x <= 30) {
         this.left = false;
       }
     }
     if (this.right === true) {
-      this.x += this.upDownSpeed;
-      if (this.maxX >= canvas.width - 20) {
+      this.x += this.directionSpeed;
+      if (this.maxX >= canvas.width - 40) {
         this.right = false;
       }
     }
@@ -65,35 +71,38 @@ class Hero {
       this.frameIdx = 0;
     }
   }
+  shieldDraw(){
+    this.ctx.drawImage(
+      this.heroShieldImg,
+      Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.shieldPngWidth,
+      Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.shieldPngHeight,
+      this.shieldPngWidth,
+      this.shieldPngHeight,
+      this.x,
+      this.y - this.height / 2,
+      this.shieldWidth,
+      this.shieldHeight
+    );
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.x, this.y - this.height / 2);
+    this.ctx.lineTo(this.x + this.shieldWidth, this.y - this.height / 2);
+    this.ctx.moveTo(this.x, this.y - this.height / 2 + this.height * 2);
+    this.ctx.lineTo(
+      this.x + this.shieldWidth,
+      this.y - this.height / 2 + this.height * 2
+    );
+    this.ctx.moveTo(this.x, this.y - this.height / 2);
+    this.ctx.lineTo(this.x, this.y - this.height / 2 + this.height * 2);
+    this.ctx.moveTo(this.x + this.shieldWidth, this.y - this.height / 2);
+    this.ctx.lineTo(
+      this.x + this.shieldWidth,
+      this.y - this.height / 2 + this.height * 2
+    );
+    this.ctx.stroke();
+  }
   draw() {
     if (this.shieldState === true) {
-      this.ctx.drawImage(
-        this.heroShieldImg,
-        Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.pngWidth,
-        Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.pngHeight,
-        this.pngWidth,
-        this.png2Height,
-        this.x,
-        this.y - this.height / 2,
-        this.width,
-        this.height * 1.9
-      );
-      this.ctx.beginPath();
-      this.ctx.moveTo(this.x, this.y - this.height / 2);
-      this.ctx.lineTo(this.x + this.width, this.y - this.height / 2);
-      this.ctx.moveTo(this.x, this.y - this.height / 2 + this.height * 2);
-      this.ctx.lineTo(
-        this.x + this.width,
-        this.y - this.height / 2 + this.height * 2
-      );
-      this.ctx.moveTo(this.x, this.y - this.height / 2);
-      this.ctx.lineTo(this.x, this.y - this.height / 2 + this.height * 2);
-      this.ctx.moveTo(this.x + this.width, this.y - this.height / 2);
-      this.ctx.lineTo(
-        this.x + this.width,
-        this.y - this.height / 2 + this.height * 2
-      );
-      this.ctx.stroke();
+      this.shieldDraw()
     } else {
       this.ctx.drawImage(
         this.heroImg,
@@ -106,7 +115,6 @@ class Hero {
         this.width,
         this.height
       );
-
       this.ctx.beginPath();
       this.ctx.moveTo(this.x, this.y);
       this.ctx.lineTo(this.x + this.width, this.y);
