@@ -1,4 +1,4 @@
-const canvas = document.getElementById("canvas");
+// const canvas = document.getElementById("canvas");
 const heroImg = new Image();
 const heroShieldImg = new Image();
 heroImg.src = "png/sp.png";
@@ -34,33 +34,33 @@ class Hero {
     this.heroShieldImg = heroShieldImg;
     this.shieldState = false;
     this.shieldWidth = 115;
-    this.shieldHeight = this.height * 1.9;
+    this.shieldHeight = this.height * 1.9; // 쉴드먹었을 때 높이 비례해서 곱함
   }
   update() {
     this.maxX = this.x + this.width;
-    this.maxY = this.y + this.height;
+    this.maxY = this.y + (this.height - 10); // 빈 공간 충돌 방지
     this.frameSpeed++;
     if (this.up === true) {
       this.y -= this.directionSpeed;
-      if (this.y <= 30) {
+      if (this.y <= 30) { // 쉴드일때 화면 위로 이미지 짤림 방지
         this.up = false;
       }
     }
     if (this.down === true) {
       this.y += this.directionSpeed;
-      if (this.maxY >= canvas.height - 40) {
+      if (this.maxY >= canvas.height - 45) { // 쉴드일때 화면 아래로 이미지 짤림 방지값 45
         this.down = false;
       }
     }
     if (this.left === true) {
       this.x -= this.directionSpeed;
-      if (this.x <= 30) {
+      if (this.x <= 30) { // 쉴드일때 화면 위로 이미지 짤림 방지
         this.left = false;
       }
     }
     if (this.right === true) {
       this.x += this.directionSpeed;
-      if (this.maxX >= canvas.width - 40) {
+      if (this.maxX >= canvas.width - 45) { // 쉴드일때 화면 아래로 이미지 짤림 방지값 45
         this.right = false;
       }
     }
@@ -79,26 +79,10 @@ class Hero {
       this.shieldPngWidth,
       this.shieldPngHeight,
       this.x,
-      this.y - this.height / 2,
+      this.y - this.height / 2, // 쉴드 먹었을때 이미지 내려가는 느낌 없앰;
       this.shieldWidth,
       this.shieldHeight
     );
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.x, this.y - this.height / 2);
-    this.ctx.lineTo(this.x + this.shieldWidth, this.y - this.height / 2);
-    this.ctx.moveTo(this.x, this.y - this.height / 2 + this.height * 2);
-    this.ctx.lineTo(
-      this.x + this.shieldWidth,
-      this.y - this.height / 2 + this.height * 2
-    );
-    this.ctx.moveTo(this.x, this.y - this.height / 2);
-    this.ctx.lineTo(this.x, this.y - this.height / 2 + this.height * 2);
-    this.ctx.moveTo(this.x + this.shieldWidth, this.y - this.height / 2);
-    this.ctx.lineTo(
-      this.x + this.shieldWidth,
-      this.y - this.height / 2 + this.height * 2
-    );
-    this.ctx.stroke();
   }
   draw() {
     if (this.shieldState === true) {
@@ -115,17 +99,15 @@ class Hero {
         this.width,
         this.height
       );
-      this.ctx.beginPath();
-      this.ctx.moveTo(this.x, this.y);
-      this.ctx.lineTo(this.x + this.width, this.y);
-      this.ctx.moveTo(this.x, this.y + this.height);
-      this.ctx.lineTo(this.x + this.width, this.y + this.height);
-      this.ctx.moveTo(this.x, this.y);
-      this.ctx.lineTo(this.x, this.y + this.height);
-      this.ctx.moveTo(this.x + this.width, this.y);
-      this.ctx.lineTo(this.x + this.width, this.y + this.height);
-      this.ctx.stroke();
+    // this.ctx.beginPath();
+    // this.ctx.strokeStyle = "white";
+    // this.ctx.lineWidth = 2;
+    // this.ctx.moveTo(this.x, this.y);
+    // this.ctx.lineTo(this.x + this.width, this.y);
+    // this.ctx.lineTo(this.x + this.width, this.y + this.height - 10);
+    // this.ctx.lineTo(this.x, this.y + this.height - 10);
+    // this.ctx.lineTo(this.x, this.y);
+    // this.ctx.stroke();
     }
   }
 }
-export default Hero;

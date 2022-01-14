@@ -1,38 +1,60 @@
-const canvas = document.getElementById("canvas");
 const shieldImg = new Image();
 shieldImg.src = "png/shield.png";
 class Shield {
   constructor(ctx, speed) {
     this.ctx = ctx;
-
-    this.width = 50;
+    this.pngWidth = shieldImg.width / 5;
+    this.pngHeight = shieldImg.height;
+    this.width = 60;
     this.height = 50;
     this.x = canvas.width - this.width;
     this.y = Math.floor(Math.random() * (canvas.height - this.height));
     this.speed = speed;
+    this.spriteFrames = [];
+    this.frameIdx = 0;
+    for (let i = 0; i < 5; i++) {
+      this.spriteFrames.push(i);
+    }
+    this.frameSpeed = 0;
   }
   update() {
     this.x -= this.speed;
+    this.frameSpeed++;
+    if (this.frameSpeed % 10 === 0) {
+      this.frameIdx++;
+    }
+    if (this.frameIdx === 5) {
+      this.frameIdx = 0;
+    }
     this.maxX = this.x + this.width;
     this.maxY = this.y + this.height;
   }
   draw() {
-    this.ctx.drawImage(shieldImg, this.x, this.y, this.width, this.height);
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.x, this.y);
-    this.ctx.lineTo(this.x + this.width, this.y);
-    this.ctx.moveTo(this.x, this.y + this.height);
-    this.ctx.lineTo(this.x + this.width, this.y + this.height);
-    this.ctx.moveTo(this.x, this.y);
-    this.ctx.lineTo(this.x, this.y + this.height);
-    this.ctx.moveTo(this.x + this.width, this.y);
-    this.ctx.lineTo(this.x + this.width, this.y + this.height);
-    this.ctx.stroke();
+    this.ctx.drawImage(
+      shieldImg,
+      Math.floor(this.spriteFrames[this.frameIdx] % 5) * this.pngWidth,
+      Math.floor(this.spriteFrames[this.frameIdx] / 5) * this.pngHeight,
+      this.pngWidth,
+      this.pngHeight,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+    // this.ctx.beginPath();
+    // this.ctx.strokeStyle = "white";
+    // this.ctx.lineWidth = 2;
+    // this.ctx.moveTo(this.x + 5, this.y + 3);
+    // this.ctx.lineTo(this.x + this.width - 5, this.y + 3);
+    // this.ctx.lineTo(this.x + this.width - 5, this.y + this.height);
+    // this.ctx.lineTo(this.x + 5, this.y + this.height);
+    // this.ctx.lineTo(this.x + 5, this.y + 3);
+    // this.ctx.stroke();
   }
   itemCrash(hero, itemArr, i) {
-    const x = this.x - hero.maxX;
-    const x2 = hero.x - this.maxX;
-    const y = this.y - hero.maxY;
+    const x = (this.x + 5) - hero.maxX;
+    const x2 = hero.x - (this.maxX - 5);
+    const y = (this.y + 3) - hero.maxY;
     const y2 = hero.y - this.maxY;
     if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {
       hero.heroShieldImg.src = "png/sp_shield.png";
@@ -41,13 +63,11 @@ class Shield {
       console.log("먹음");
       setTimeout(() => {
         hero.heroShieldImg.src = "png/sp_shield0.png";
-      }, 2000);
+      }, 4000);
       setTimeout(() => {
         console.log("끝");
-        // hero.heroImg.src = "png/sp.png";
         hero.shieldState = false;
-      }, 3000);
+      }, 5000);
     }
   }
 }
-export default Shield;

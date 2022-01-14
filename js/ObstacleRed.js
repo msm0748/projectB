@@ -1,21 +1,20 @@
-const canvas = document.getElementById("canvas");
-const obstacleImg = new Image();
-obstacleImg.src = "png/obBeige.png";
-class ObstacleBeige {
+const obRedImg = new Image();
+obRedImg.src = "png/obRed.png";
+class ObstacleRed {
   constructor(ctx) {
     this.ctx = ctx;
     this.highAndLow = 40;
-    this.pngWidth = obstacleImg.width / 3;
-    this.pngHeight = obstacleImg.height;
+    this.pngWidth = obRedImg.width / 2;
+    this.pngHeight = obRedImg.height;
     this.width = 85;
     this.height = 85;
     this.x = canvas.width - this.width;
     this.y =
-      Math.floor(
-        Math.random() * (canvas.height - this.height - this.highAndLow * 2)
-      ) + this.highAndLow;
-    this.speed = 8;
-    console.log(this.speed);
+    Math.floor(
+      Math.random() * (canvas.height - this.height - this.highAndLow * 2)
+    ) + this.highAndLow; //처음 나오는 y값 랜덤, 이미지 삐져나감 방지
+    // this.y = 80;
+    this.speed = 6;
     this.spriteFrames = [];
     this.frameIdx = 0;
     for (let i = 0; i < 2; i++) {
@@ -31,6 +30,8 @@ class ObstacleBeige {
   update() {
     this.x -= this.speed;
     this.frameSpeed++;
+    this.maxX = this.x + this.width;
+    this.maxY = this.y + this.height;
     if (this.upDown === false) {
       if (this.y > this.minusY) {
         this.y -= 2;
@@ -48,9 +49,8 @@ class ObstacleBeige {
         }
       }
     }
-    this.maxX = this.x + this.width;
-    this.maxY = this.y + this.height;
-    if (this.frameSpeed % 10 === 0) {
+
+    if(this.frameSpeed % 10 === 0){
       this.frameIdx++;
     }
     if (this.frameIdx === 2) {
@@ -59,7 +59,7 @@ class ObstacleBeige {
   }
   draw() {
     this.ctx.drawImage(
-      obstacleImg,
+      obRedImg,
       Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.pngWidth,
       Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.pngHeight,
       this.pngWidth,
@@ -69,22 +69,22 @@ class ObstacleBeige {
       this.width,
       this.height
     );
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.x, this.y);
-    this.ctx.lineTo(this.x + this.width, this.y);
-    this.ctx.moveTo(this.x, this.y + this.height);
-    this.ctx.lineTo(this.x + this.width, this.y + this.height);
-    this.ctx.moveTo(this.x, this.y);
-    this.ctx.lineTo(this.x, this.y + this.height);
-    this.ctx.moveTo(this.x + this.width, this.y);
-    this.ctx.lineTo(this.x + this.width, this.y + this.height);
-    this.ctx.stroke();
+    // this.ctx.beginPath();
+    // this.ctx.strokeStyle = "white";
+    // this.ctx.lineWidth = 2;
+    // this.ctx.moveTo(this.x + 10, this.y + 21);
+    // this.ctx.lineTo(this.x + this.width - 15, this.y + 21);
+    // this.ctx.lineTo(this.x + this.width - 15, this.y + this.height - 17);
+    // this.ctx.lineTo(this.x + 10, this.y + this.height - 17);
+    // this.ctx.lineTo(this.x + 10, this.y + 21);
+    // this.ctx.stroke();
   }
+
   obstacleCrash(hero, ani, btn) {
-    const x = this.x - hero.maxX;
-    const x2 = hero.x - this.maxX;
-    const y = this.y - hero.maxY;
-    const y2 = hero.y - this.maxY;
+    const x = (this.x + 10) - hero.maxX;
+    const x2 = hero.x - (this.maxX - 15);
+    const y = (this.y + 21) - hero.maxY;
+    const y2 = hero.y - (this.maxY - 17);
     if (hero.shieldState === false) {
       if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {
         cancelAnimationFrame(ani);
@@ -93,5 +93,3 @@ class ObstacleBeige {
     }
   }
 }
-
-export default ObstacleBeige;
