@@ -27,18 +27,18 @@ class ObstacleBlue {
     this.maxY = this.y + this.height;
     if (this.upDown === false) {
       if (this.y + this.height < canvas.height) {
-        this.y += 6;
+        this.y += 4;
         if (this.y + this.height >= canvas.height) {
           this.upDown = true;
         }
       }
     } else {
-      this.y -= 6;
-        if (this.y <= 0) {
-            this.upDown = false;
-        }
+      this.y -= 4;
+      if (this.y <= 0) {
+        this.upDown = false;
+      }
     }
-    if(this.frameSpeed % 10 === 0){
+    if (this.frameSpeed % 10 === 0) {
       this.frameIdx++;
     }
     if (this.frameIdx === 2) {
@@ -69,9 +69,9 @@ class ObstacleBlue {
   }
 
   obstacleCrash(hero, ani, btn) {
-    const x = (this.x + 10) - hero.maxX;
+    const x = this.x + 10 - hero.maxX;
     const x2 = hero.x - (this.maxX - 15);
-    const y = (this.y + 27) - hero.maxY;
+    const y = this.y + 27 - hero.maxY;
     const y2 = hero.y - (this.maxY - 17);
     if (hero.shieldState === false) {
       if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {

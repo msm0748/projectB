@@ -23,7 +23,8 @@ function start() {
   let obstacleLenght = 0;
 
   function handleItem() {
-    if (obstacleLenght < 50) { // 50마리만 배출
+    if (obstacleLenght < 50) {
+      // 50마리만 배출
       if (timer % 1000 === 0) {
         const item = new Shield(ctx, Math.floor(Math.random() * 6) + 3);
         itemArr.push(item);
@@ -33,7 +34,6 @@ function start() {
       if (itemArr[i].x < -20) {
         // 좌측 화면에서 -20px 나가면 배열에서 삭제
         itemArr.splice(i, 1);
-
       }
       if (itemArr[i]) {
         // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지
@@ -51,9 +51,10 @@ function start() {
       Math.floor(Math.random() * 100) + 50,
       Math.floor(Math.random() * 100) + 100,
     ];
-    if (obstacleLenght < 50) { // 50마리만 배출
+    if (obstacleLenght < 50) {
+      // 50마리만 배출
       if (timer % 90 === 0) {
-        const obstacleGreen = new ObstacleGreen(ctx);
+        const obstacleGreen = new ObstaclePink(ctx);
         obstacleArr.push(obstacleGreen);
         obstacleLenght++;
       }

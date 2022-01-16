@@ -1,16 +1,15 @@
-const obGreenImg = new Image();
-obGreenImg.src = "png/obGreen.png";
-class ObstacleGreen {
+const obPinkImg = new Image();
+obPinkImg.src = "png/obPink.png";
+class ObstaclePink {
   constructor(ctx) {
     this.ctx = ctx;
-    this.pngWidth = obGreenImg.width / 2;
-    this.pngHeight = obGreenImg.height;
+    this.pngWidth = obPinkImg.width / 2;
+    this.pngHeight = obPinkImg.height;
     this.width = 85;
     this.height = 85;
     this.x = canvas.width - this.width;
     this.y = Math.floor(Math.random() * (canvas.height - this.height)); //처음 나오는 y값 랜덤, 이미지 삐져나감 방지
-    
-    this.speed = 8;
+    this.speed = 7;
     this.spriteFrames = [];
     this.frameIdx = 0;
     for (let i = 0; i < 2; i++) {
@@ -19,7 +18,6 @@ class ObstacleGreen {
     this.spriteX = 0;
     this.spriteY = 0;
     this.frameSpeed = 0;
-
   }
   update() {
     this.x -= this.speed;
@@ -35,7 +33,7 @@ class ObstacleGreen {
   }
   draw() {
     this.ctx.drawImage(
-      obGreenImg,
+      obPinkImg,
       Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.pngWidth,
       Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.pngHeight,
       this.pngWidth,
@@ -57,19 +55,9 @@ class ObstacleGreen {
   }
 
   obstacleCrash(hero, ani, btn) {
-    const x = (this.x + 10) - hero.maxX;
-    // this.ctx.beginPath();
-    // this.ctx.strokeStyle = "red";
-    // this.ctx.moveTo(hero.maxX, hero.maxY);
-    // this.ctx.lineTo(this.maxX - 10, this.maxY - 10);
-    // this.ctx.stroke();
-    // this.ctx.beginPath();
-    // this.ctx.strokeStyle = "blue";
-    // this.ctx.moveTo(hero.maxX, hero.y);
-    // this.ctx.lineTo(this.x + 5, this.y + 21);
-    // this.ctx.stroke();
+    const x = this.x + 10 - hero.maxX; // 빈공간 충돌 방지를 위해 상세조정
     const x2 = hero.x - (this.maxX - 15);
-    const y = (this.y + 21) - hero.maxY;
+    const y = this.y + 21 - hero.maxY;
     const y2 = hero.y - (this.maxY - 17);
     if (hero.shieldState === false) {
       if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {

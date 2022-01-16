@@ -9,7 +9,7 @@ class ObstacleYellow {
     this.height = 85;
     this.x = canvas.width - this.width;
     this.y = Math.floor(Math.random() * (canvas.height - this.height));
-    this.speed = 7;
+    this.speed = 8;
     this.spriteFrames = [];
     this.frameIdx = 0;
     for (let i = 0; i < 2; i++) {
@@ -19,7 +19,6 @@ class ObstacleYellow {
     this.spriteY = 0;
     this.frameSpeed = 0;
     this.t = 0;
-
   }
   update() {
     this.x -= this.speed;
@@ -32,7 +31,6 @@ class ObstacleYellow {
     if (this.frameIdx === 2) {
       this.frameIdx = 0;
     }
-
   }
 
   draw() {
@@ -59,9 +57,9 @@ class ObstacleYellow {
   }
 
   obstacleCrash(hero, ani, btn) {
-    const x = (this.x + 10) - hero.maxX;
+    const x = this.x + 10 - hero.maxX;
     const x2 = hero.x - (this.maxX - 15);
-    const y = (this.y + 21) - hero.maxY;
+    const y = this.y + 21 - hero.maxY;
     const y2 = hero.y - (this.maxY - 17);
     if (hero.shieldState === false) {
       if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {
@@ -71,4 +69,3 @@ class ObstacleYellow {
     }
   }
 }
-

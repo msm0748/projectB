@@ -28,7 +28,7 @@ class Hero {
     this.heroImg = heroImg;
     this.shield();
   }
-  shield(){
+  shield() {
     this.shieldPngWidth = 510;
     this.shieldPngHeight = heroShieldImg.height;
     this.heroShieldImg = heroShieldImg;
@@ -42,25 +42,29 @@ class Hero {
     this.frameSpeed++;
     if (this.up === true) {
       this.y -= this.directionSpeed;
-      if (this.y <= 30) { // 쉴드일때 화면 위로 이미지 짤림 방지
+      if (this.y <= 30) {
+        // 쉴드일때 화면 위로 이미지 짤림 방지
         this.up = false;
       }
     }
     if (this.down === true) {
       this.y += this.directionSpeed;
-      if (this.maxY >= canvas.height - 45) { // 쉴드일때 화면 아래로 이미지 짤림 방지값 45
+      if (this.maxY >= canvas.height - 45) {
+        // 쉴드일때 화면 아래로 이미지 짤림 방지값 45
         this.down = false;
       }
     }
     if (this.left === true) {
       this.x -= this.directionSpeed;
-      if (this.x <= 30) { // 쉴드일때 화면 위로 이미지 짤림 방지
+      if (this.x <= 30) {
+        // 쉴드일때 화면 위로 이미지 짤림 방지
         this.left = false;
       }
     }
     if (this.right === true) {
       this.x += this.directionSpeed;
-      if (this.maxX >= canvas.width - 45) { // 쉴드일때 화면 아래로 이미지 짤림 방지값 45
+      if (this.maxX >= canvas.width - 45) {
+        // 쉴드일때 화면 아래로 이미지 짤림 방지값 45
         this.right = false;
       }
     }
@@ -71,7 +75,7 @@ class Hero {
       this.frameIdx = 0;
     }
   }
-  shieldDraw(){
+  shieldDraw() {
     this.ctx.drawImage(
       this.heroShieldImg,
       Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.shieldPngWidth,
@@ -79,14 +83,14 @@ class Hero {
       this.shieldPngWidth,
       this.shieldPngHeight,
       this.x,
-      this.y - this.height / 2, // 쉴드 먹었을때 이미지 내려가는 느낌 없앰;
+      this.y - this.height / 2, // 쉴드 먹었을때 이미지 틀어지는 느낌 없앰;
       this.shieldWidth,
       this.shieldHeight
     );
   }
   draw() {
     if (this.shieldState === true) {
-      this.shieldDraw()
+      this.shieldDraw();
     } else {
       this.ctx.drawImage(
         this.heroImg,
@@ -99,15 +103,15 @@ class Hero {
         this.width,
         this.height
       );
-    // this.ctx.beginPath();
-    // this.ctx.strokeStyle = "white";
-    // this.ctx.lineWidth = 2;
-    // this.ctx.moveTo(this.x, this.y);
-    // this.ctx.lineTo(this.x + this.width, this.y);
-    // this.ctx.lineTo(this.x + this.width, this.y + this.height - 10);
-    // this.ctx.lineTo(this.x, this.y + this.height - 10);
-    // this.ctx.lineTo(this.x, this.y);
-    // this.ctx.stroke();
+      // this.ctx.beginPath();
+      // this.ctx.strokeStyle = "white";
+      // this.ctx.lineWidth = 2;
+      // this.ctx.moveTo(this.x, this.y);
+      // this.ctx.lineTo(this.x + this.width, this.y);
+      // this.ctx.lineTo(this.x + this.width, this.y + this.height - 10);
+      // this.ctx.lineTo(this.x, this.y + this.height - 10);
+      // this.ctx.lineTo(this.x, this.y);
+      // this.ctx.stroke();
     }
   }
 }
