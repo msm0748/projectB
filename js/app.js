@@ -5,21 +5,46 @@
 // import Hero from "./hero.js";
 // import BgLayer from "./bgLayer.js";
 // import Shield from "./item.js";
-const btn = document.querySelector("button");
-const canvas = document.getElementById("canvas");
+const btns = document.querySelector(".btn");
+const btn = document.querySelector(".start");
+const rule = document.querySelector(".rule");
+const modal = document.querySelector(".modal");
+const x_btn = document.querySelector("i");
+const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const point = document.getElementById("point");
+let reStart = false;
 point.innerText = 0;
 let ani;
+let aniReady;
 
-ctx.font = "30px Arial";
-ctx.textAlign = "center"
-ctx.fillText("게임 시작", canvas.width/2, 50);
-ctx.fillText("게임 방법", canvas.width/2, 200);
-var text = ctx.measureText('foo   ');
-console.log(text);
+function ready() {
+  const bgLayer = new BgLayer(ctx);
+  function draw() {
+    aniReady = requestAnimationFrame(draw);
+    bgLayer.update(0);
+    bgLayer.draw();
+    const readyhImg = new Image();
+    readyhImg.src = "png/ready.png";
+    const readyhImgWidth = 450;
+    const readyhImgHeight = 200;
+    const x = canvas.width / 2 - readyhImgWidth / 2;
+    const y = 30;
+    ctx.drawImage(readyhImg, x, y, readyhImgWidth, readyhImgHeight);
+  }
+  draw();
+}
+ready();
+rule.addEventListener("click", function () {
+  modal.classList.add("on");
+});
+x_btn.addEventListener("click", function () {
+  modal.classList.remove("on");
+});
 
 function start() {
+  cancelAnimationFrame(aniReady);
+  btns.style.display = "none";
   point.innerText = 0;
   const hero = new Hero(ctx);
   const bgLayer = new BgLayer(ctx);
@@ -28,7 +53,6 @@ function start() {
   let itemArr = [];
   let pointNumber = 0;
   let obstacleLenght = 0;
-  // let gameOver = false;
   function handleItem() {
     if (obstacleLenght < 50) {
       // 50마리만 배출
@@ -111,20 +135,22 @@ function start() {
     handleObstacle();
     hero.update();
     hero.draw();
-    if(hero.gameOver === true){
+    if (hero.gameOver === true) {
       cancelAnimationFrame(ani);
       const deathImg = new Image();
-      deathImg.src = "death.png";
-      const deathImgWidth = 450;
-      const deathImgHeight = 300;
-      const x = canvas.width / 2 - deathImgWidth / 2;
-      const y = canvas.height / 2 - deathImgHeight / 2
-      setTimeout(()=>{
-        ctx.drawImage(
-          deathImg,
-          x, y, deathImgWidth, deathImgHeight
-        );
-        btn.removeAttribute("disabled");
+      deathImg.src = "png/death.png";
+      const deathImgWidth = 550;
+      const deathImgHeight = 150;
+      const imgX = canvas.width / 2 - deathImgWidth / 2;
+      const imgY = canvas.height / 2 - deathImgHeight / 2;
+      const textX = canvas.width / 2;
+      const textY = canvas.height - 30;
+      setTimeout(() => {
+        ctx.drawImage(deathImg, imgX, imgY, deathImgWidth, deathImgHeight);
+        ctx.font = "40px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("다시 시작하려면 Space를 눌려주세요. ", textX, textY);
+        reStart = true;
       }, 500);
     }
   }
@@ -171,5 +197,14 @@ function start() {
 btn.addEventListener("click", function () {
   cancelAnimationFrame(ani);
   start();
-  btn.setAttribute("disabled", true);
+  reStart = false;
+});
+document.addEventListener("keydown", function (e) {
+  if (e.code === "Space") {
+    if (reStart === true) {
+      cancelAnimationFrame(ani);
+      start();
+      reStart = false;
+    }
+  }
 });

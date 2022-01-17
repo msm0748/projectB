@@ -1,4 +1,3 @@
-
 class Obstacle {
   constructor(img, speed) {
     this.img = img;
@@ -71,8 +70,6 @@ class Obstacle {
     }
   }
 }
-const deathImag = new Image();
-deathImag.src = "death.png";
 class ObstaclePink extends Obstacle {
   constructor(img, speed) {
     super(img, speed);
@@ -113,7 +110,7 @@ class ObstacleRed extends Obstacle {
     super(img, speed);
     this.highAndLow = 40;
     this.y =
-        Math.floor(
+      Math.floor(
         Math.random() * (canvas.height - this.height - this.highAndLow * 2)
       ) + this.highAndLow; //처음 나오는 y값 랜덤, 이미지 삐져나감 방지
     this.plusY = this.y + this.highAndLow;
