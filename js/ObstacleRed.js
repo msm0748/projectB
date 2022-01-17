@@ -10,9 +10,9 @@ class ObstacleRed {
     this.height = 85;
     this.x = canvas.width - this.width;
     this.y =
-    Math.floor(
-      Math.random() * (canvas.height - this.height - this.highAndLow * 2)
-    ) + this.highAndLow; //처음 나오는 y값 랜덤, 이미지 삐져나감 방지
+      Math.floor(
+        Math.random() * (canvas.height - this.height - this.highAndLow * 2)
+      ) + this.highAndLow; //처음 나오는 y값 랜덤, 이미지 삐져나감 방지
     // this.y = 80;
     this.speed = 6;
     this.spriteFrames = [];
@@ -50,7 +50,7 @@ class ObstacleRed {
       }
     }
 
-    if(this.frameSpeed % 10 === 0){
+    if (this.frameSpeed % 10 === 0) {
       this.frameIdx++;
     }
     if (this.frameIdx === 2) {
@@ -81,9 +81,9 @@ class ObstacleRed {
   }
 
   obstacleCrash(hero, ani, btn) {
-    const x = (this.x + 10) - hero.maxX;
+    const x = this.x + 10 - hero.maxX;
     const x2 = hero.x - (this.maxX - 15);
-    const y = (this.y + 21) - hero.maxY;
+    const y = this.y + 21 - hero.maxY;
     const y2 = hero.y - (this.maxY - 17);
     if (hero.shieldState === false) {
       if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {

@@ -1,4 +1,3 @@
-// const canvas = document.getElementById("canvas");
 const heroImg = new Image();
 const heroShieldImg = new Image();
 heroImg.src = "png/sp.png";
@@ -26,6 +25,7 @@ class Hero {
     this.frameSpeed = 0;
     this.directionSpeed = 10;
     this.heroImg = heroImg;
+    this.gameOver = false; //임시
     this.shield();
   }
   shield() {

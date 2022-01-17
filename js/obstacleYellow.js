@@ -18,7 +18,6 @@ class ObstacleYellow {
     this.spriteX = 0;
     this.spriteY = 0;
     this.frameSpeed = 0;
-    this.t = 0;
   }
   update() {
     this.x -= this.speed;

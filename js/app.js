@@ -12,6 +12,13 @@ const point = document.getElementById("point");
 point.innerText = 0;
 let ani;
 
+ctx.font = "30px Arial";
+ctx.textAlign = "center"
+ctx.fillText("게임 시작", canvas.width/2, 50);
+ctx.fillText("게임 방법", canvas.width/2, 200);
+var text = ctx.measureText('foo   ');
+console.log(text);
+
 function start() {
   point.innerText = 0;
   const hero = new Hero(ctx);
@@ -21,7 +28,7 @@ function start() {
   let itemArr = [];
   let pointNumber = 0;
   let obstacleLenght = 0;
-
+  // let gameOver = false;
   function handleItem() {
     if (obstacleLenght < 50) {
       // 50마리만 배출
@@ -45,31 +52,35 @@ function start() {
   }
 
   function handleObstacle() {
-    const obRandom = [
-      Math.floor(Math.random() * 50) + 100,
-      Math.floor(Math.random() * 100) + 150,
-      Math.floor(Math.random() * 100) + 50,
-      Math.floor(Math.random() * 100) + 100,
-    ];
+    const obPinkImg = new Image();
+    obPinkImg.src = "png/obPink.png";
+    const obYellowImg = new Image();
+    obYellowImg.src = "png/obYellow.png";
+    const obBlueImg = new Image();
+    obBlueImg.src = "png/obBlue.png";
+    const obRedImg = new Image();
+    obRedImg.src = "png/obRed.png";
     if (obstacleLenght < 50) {
       // 50마리만 배출
       if (timer % 90 === 0) {
-        const obstacleGreen = new ObstaclePink(ctx);
-        obstacleArr.push(obstacleGreen);
+        const obstaclePink = new ObstaclePink(obPinkImg, 6);
+        obstacleArr.push(obstaclePink);
         obstacleLenght++;
       }
       if (timer % 200 === 0) {
-        const obstacleYellow = new ObstacleYellow(ctx);
+        const obYellowImg = new Image();
+        obYellowImg.src = "png/obYellow.png";
+        const obstacleYellow = new ObstacleYellow(obYellowImg, 8);
         obstacleArr.push(obstacleYellow);
         obstacleLenght++;
       }
       if (timer % 250 === 0) {
-        const obstacleBlue = new ObstacleBlue(ctx);
+        const obstacleBlue = new ObstacleBlue(obBlueImg, 5);
         obstacleArr.push(obstacleBlue);
         obstacleLenght++;
       }
       if (timer % 350 === 0) {
-        const obstacleRed = new ObstacleRed(ctx);
+        const obstacleRed = new ObstacleRed(obRedImg, 6);
         obstacleArr.push(obstacleRed);
         obstacleLenght++;
       }
@@ -80,14 +91,12 @@ function start() {
         obstacleArr.splice(i, 1);
         pointNumber++;
         point.innerText = pointNumber;
-        // cancelAnimationFrame(ani);
       }
       if (obstacleArr[i]) {
         // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지
-        // obstacleCrash(hero, obstacleArr[i]);
         obstacleArr[i].update();
         obstacleArr[i].draw();
-        obstacleArr[i].obstacleCrash(hero, ani, btn);
+        obstacleArr[i].obstacleCrash(hero);
       }
     }
   }
@@ -102,6 +111,22 @@ function start() {
     handleObstacle();
     hero.update();
     hero.draw();
+    if(hero.gameOver === true){
+      cancelAnimationFrame(ani);
+      const deathImg = new Image();
+      deathImg.src = "death.png";
+      const deathImgWidth = 450;
+      const deathImgHeight = 300;
+      const x = canvas.width / 2 - deathImgWidth / 2;
+      const y = canvas.height / 2 - deathImgHeight / 2
+      setTimeout(()=>{
+        ctx.drawImage(
+          deathImg,
+          x, y, deathImgWidth, deathImgHeight
+        );
+        btn.removeAttribute("disabled");
+      }, 500);
+    }
   }
   draw();
 
