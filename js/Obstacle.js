@@ -85,29 +85,6 @@ class ObstacleYellow extends Obstacle {
 class ObstacleBlue extends Obstacle {
   constructor(img, speed) {
     super(img, speed);
-    this.upDown = Math.floor(Math.random() * 2) === 1 ? false : true;
-  }
-  update() {
-    super.update();
-    if (this.upDown === false) {
-      if (this.y + this.height < canvas.height) {
-        this.y += 4;
-        if (this.y + this.height >= canvas.height) {
-          this.upDown = true;
-        }
-      }
-    } else {
-      this.y -= 4;
-      if (this.y <= 0) {
-        this.upDown = false;
-      }
-    }
-  }
-}
-
-class ObstacleRed extends Obstacle {
-  constructor(img, speed) {
-    super(img, speed);
     this.highAndLow = 40;
     this.y =
       Math.floor(
@@ -134,6 +111,29 @@ class ObstacleRed extends Obstacle {
             this.upDown = false;
           }
         }
+      }
+    }
+  }
+}
+
+class ObstacleRed extends Obstacle {
+  constructor(img, speed) {
+    super(img, speed);
+    this.upDown = Math.floor(Math.random() * 2) === 1 ? false : true;
+  }
+  update() {
+    super.update();
+    if (this.upDown === false) {
+      if (this.y + this.height < canvas.height) {
+        this.y += 4;
+        if (this.y + this.height >= canvas.height) {
+          this.upDown = true;
+        }
+      }
+    } else {
+      this.y -= 4;
+      if (this.y <= 0) {
+        this.upDown = false;
       }
     }
   }

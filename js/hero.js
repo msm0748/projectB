@@ -5,8 +5,7 @@ heroShieldImg.src = "png/sp_shield.png";
 
 class Hero {
   //주인공 셋팅
-  constructor(ctx) {
-    this.ctx = ctx;
+  constructor() {
     this.pngWidth = 443;
     this.pngHeight = heroImg.height;
     this.width = 100;
@@ -76,7 +75,7 @@ class Hero {
     }
   }
   shieldDraw() {
-    this.ctx.drawImage(
+    ctx.drawImage(
       this.heroShieldImg,
       Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.shieldPngWidth,
       Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.shieldPngHeight,
@@ -92,7 +91,7 @@ class Hero {
     if (this.shieldState === true) {
       this.shieldDraw();
     } else {
-      this.ctx.drawImage(
+      ctx.drawImage(
         this.heroImg,
         Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.pngWidth,
         Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.pngHeight,

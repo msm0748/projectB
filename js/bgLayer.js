@@ -2,7 +2,6 @@ const bg = new Image();
 bg.src = "png/bg.png";
 class BgLayer {
   constructor(ctx) {
-    this.ctx = ctx;
     this.speed = 5;
     this.bgWidth = bg.width;
     this.x = 0;
@@ -25,8 +24,8 @@ class BgLayer {
   }
 
   draw() {
-    this.ctx.drawImage(bg, this.x, 0, this.bgWidth, canvas.height);
-    this.ctx.drawImage(bg, this.x2, 0, this.bgWidth, canvas.height);
+    ctx.drawImage(bg, this.x, 0, this.bgWidth, canvas.height);
+    ctx.drawImage(bg, this.x2, 0, this.bgWidth, canvas.height);
   //   this.ctx.font = '48px serif'
   //   this.ctx.textAlign = "center";
   //   this.ctx.textBaseline = "middle";

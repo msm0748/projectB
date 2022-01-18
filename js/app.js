@@ -19,7 +19,7 @@ let ani;
 let aniReady;
 
 function ready() {
-  const bgLayer = new BgLayer(ctx);
+  const bgLayer = new BgLayer();
   function draw() {
     aniReady = requestAnimationFrame(draw);
     bgLayer.update(0);
@@ -46,8 +46,8 @@ function start() {
   cancelAnimationFrame(aniReady);
   btns.style.display = "none";
   point.innerText = 0;
-  const hero = new Hero(ctx);
-  const bgLayer = new BgLayer(ctx);
+  const hero = new Hero();
+  const bgLayer = new BgLayer();
   let timer = 150;
   let obstacleArr = [];
   let itemArr = [];
@@ -136,26 +136,37 @@ function start() {
     hero.update();
     hero.draw();
     if (hero.gameOver === true) {
-      cancelAnimationFrame(ani);
-      const deathImg = new Image();
-      deathImg.src = "png/death.png";
-      const deathImgWidth = 550;
-      const deathImgHeight = 150;
-      const imgX = canvas.width / 2 - deathImgWidth / 2;
-      const imgY = canvas.height / 2 - deathImgHeight / 2;
-      const textX = canvas.width / 2;
-      const textY = canvas.height - 30;
-      setTimeout(() => {
-        ctx.drawImage(deathImg, imgX, imgY, deathImgWidth, deathImgHeight);
-        ctx.font = "40px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText("다시 시작하려면 Space를 눌려주세요. ", textX, textY);
-        reStart = true;
-      }, 500);
+      gameOver();
+    }
+    if (pointNumber === 50) {
+      mouse.x = hero.x;
+      mouse.y = hero.y;
+      for (let i = 0; i < particleArray.length; i++) {
+        particleArray[i].draw();
+        particleArray[i].update();
+      }
     }
   }
   draw();
-
+  function gameOver() {
+    cancelAnimationFrame(ani);
+    const deathImg = new Image();
+    deathImg.src = "png/death.png";
+    const deathImgWidth = 550;
+    const deathImgHeight = 150;
+    const imgX = canvas.width / 2 - deathImgWidth / 2;
+    const imgY = canvas.height / 2 - deathImgHeight / 2;
+    const textX = canvas.width / 2;
+    const textY = canvas.height - 30;
+    setTimeout(() => {
+      ctx.drawImage(deathImg, imgX, imgY, deathImgWidth, deathImgHeight);
+      ctx.fillStyle = "black";
+      ctx.font = "40px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("다시 시작하려면 Space를 눌러주세요. ", textX, textY);
+      reStart = true;
+    }, 500);
+  }
   document.addEventListener("keydown", function (e) {
     if (e.code === "ArrowUp" || e.key === "Up") {
       if (hero.y > 30) {
@@ -200,7 +211,7 @@ btn.addEventListener("click", function () {
   reStart = false;
 });
 document.addEventListener("keydown", function (e) {
-  if (e.code === "Space") {
+  if (e.code === "Space" || e.key === "Spacebar") {
     if (reStart === true) {
       cancelAnimationFrame(ani);
       start();
