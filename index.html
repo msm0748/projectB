@@ -4,25 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Nagarry's HTML5</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script> 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.10.4/polyfill.min.js"></script>
- 
+    <link rel="stylesheet" href="css/style.css"> 
 </head>
 
 <body>
     <div id="point"></div>
     <div id="canvas">
-        <div class="modal"><i></i></div>
+        <div class="modal"><i class="x_btn"></i><i></i></div>
         <canvas width="900" height="336px"></canvas>
         <div class="btn"><button class="rule">게임방법</button><button class="start">게임시작</button></div>
     </div>
-    <script type="text/babel" src="js/hero.js" defer></script>
-    <script type="text/babel" src="js/item.js" defer></script>
-    <script type="text/babel" src="js/bgLayer.js" defer></script>
-    <script type="text/babel" src="js/obstacle.js" defer></script>
-    <script type="text/babel" src="js/app.js" defer></script>
-    <script type="text/babel" src="js/particle.js" defer></script>
+    <script src="js/app.mjs" type="module"></script>
 </body>
 
 </html>

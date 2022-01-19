@@ -1,14 +1,15 @@
 const shieldImg = new Image();
 shieldImg.src = "png/shield.png";
-class Shield {
-  constructor(ctx, speed) {
+export default class Shield {
+  constructor(canvas, ctx, speed) {
+    this.canvas = canvas;
     this.ctx = ctx;
     this.pngWidth = shieldImg.width / 5;
     this.pngHeight = shieldImg.height;
     this.width = 60;
     this.height = 50;
-    this.x = canvas.width - this.width;
-    this.y = Math.floor(Math.random() * (canvas.height - this.height));
+    this.x = this.canvas.width - this.width;
+    this.y = Math.floor(Math.random() * (this.canvas.height - this.height));
     this.speed = speed;
     this.spriteFrames = [];
     this.frameIdx = 0;
@@ -52,9 +53,9 @@ class Shield {
     // this.ctx.stroke();
   }
   itemCrash(hero, itemArr, i) {
-    const x = (this.x + 5) - hero.maxX;
+    const x = this.x + 5 - hero.maxX;
     const x2 = hero.x - (this.maxX - 5);
-    const y = (this.y + 3) - hero.maxY;
+    const y = this.y + 3 - hero.maxY;
     const y2 = hero.y - this.maxY;
     if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {
       hero.heroShieldImg.src = "png/sp_shield.png";

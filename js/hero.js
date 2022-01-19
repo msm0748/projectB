@@ -3,15 +3,17 @@ const heroShieldImg = new Image();
 heroImg.src = "png/sp.png";
 heroShieldImg.src = "png/sp_shield.png";
 
-class Hero {
+export default class Hero {
   //주인공 셋팅
-  constructor() {
+  constructor(canvas, ctx) {
+    this.canvas = canvas;
+    this.ctx = ctx;
     this.pngWidth = 443;
     this.pngHeight = heroImg.height;
     this.width = 100;
     this.height = 50;
     this.x = 20; // 시작 위치
-    this.y = canvas.height / 2 - this.height / 2; // 시작 위치
+    this.y = this.canvas.height / 2 - this.height / 2; // 시작 위치
     this.spriteFrames = [];
     this.frameIdx = 0;
     for (let i = 0; i < 2; i++) {
@@ -48,7 +50,7 @@ class Hero {
     }
     if (this.down === true) {
       this.y += this.directionSpeed;
-      if (this.maxY >= canvas.height - 45) {
+      if (this.maxY >= this.canvas.height - 45) {
         // 쉴드일때 화면 아래로 이미지 짤림 방지값 45
         this.down = false;
       }
@@ -62,7 +64,7 @@ class Hero {
     }
     if (this.right === true) {
       this.x += this.directionSpeed;
-      if (this.maxX >= canvas.width - 45) {
+      if (this.maxX >= this.canvas.width - 45) {
         // 쉴드일때 화면 아래로 이미지 짤림 방지값 45
         this.right = false;
       }
@@ -75,7 +77,7 @@ class Hero {
     }
   }
   shieldDraw() {
-    ctx.drawImage(
+    this.ctx.drawImage(
       this.heroShieldImg,
       Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.shieldPngWidth,
       Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.shieldPngHeight,
@@ -91,7 +93,7 @@ class Hero {
     if (this.shieldState === true) {
       this.shieldDraw();
     } else {
-      ctx.drawImage(
+      this.ctx.drawImage(
         this.heroImg,
         Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.pngWidth,
         Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.pngHeight,

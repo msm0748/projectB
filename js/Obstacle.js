@@ -1,12 +1,14 @@
 class Obstacle {
-  constructor(img, speed) {
+  constructor(canvas, ctx, img, speed) {
+    this.canvas = canvas;
+    this.ctx = ctx;
     this.img = img;
     this.pngWidth = this.img.width / 2;
     this.pngHeight = this.img.height;
     this.width = 85;
     this.height = 85;
-    this.x = canvas.width - this.width;
-    this.y = Math.floor(Math.random() * (canvas.height - this.height)); //처음 나오는 y값 랜덤, 이미지 삐져나감 방지
+    this.x = this.canvas.width - this.width;
+    this.y = Math.floor(Math.random() * (this.canvas.height - this.height)); //처음 나오는 y값 랜덤, 이미지 삐져나감 방지
     this.speed = speed;
     this.spriteFrames = [];
     this.frameIdx = 0;
@@ -30,7 +32,7 @@ class Obstacle {
     }
   }
   draw() {
-    ctx.drawImage(
+    this.ctx.drawImage(
       this.img,
       Math.floor(this.spriteFrames[this.frameIdx] % 2) * this.pngWidth,
       Math.floor(this.spriteFrames[this.frameIdx] / 2) * this.pngHeight,
@@ -71,24 +73,24 @@ class Obstacle {
   }
 }
 class ObstaclePink extends Obstacle {
-  constructor(img, speed) {
-    super(img, speed);
+  constructor(canvas, ctx, img, speed) {
+    super(canvas, ctx, img, speed);
   }
 }
 
 class ObstacleYellow extends Obstacle {
-  constructor(img, speed) {
-    super(img, speed);
+  constructor(canvas, ctx, img, speed) {
+    super(canvas, ctx, img, speed);
   }
 }
 
 class ObstacleBlue extends Obstacle {
-  constructor(img, speed) {
-    super(img, speed);
+  constructor(canvas, ctx, img, speed) {
+    super(canvas, ctx, img, speed);
     this.highAndLow = 40;
     this.y =
       Math.floor(
-        Math.random() * (canvas.height - this.height - this.highAndLow * 2)
+        Math.random() * (this.canvas.height - this.height - this.highAndLow * 2)
       ) + this.highAndLow; //처음 나오는 y값 랜덤, 이미지 삐져나감 방지
     this.plusY = this.y + this.highAndLow;
     this.minusY = this.y - this.highAndLow;
@@ -117,16 +119,16 @@ class ObstacleBlue extends Obstacle {
 }
 
 class ObstacleRed extends Obstacle {
-  constructor(img, speed) {
-    super(img, speed);
+  constructor(canvas, ctx, img, speed) {
+    super(canvas, ctx, img, speed);
     this.upDown = Math.floor(Math.random() * 2) === 1 ? false : true;
   }
   update() {
     super.update();
     if (this.upDown === false) {
-      if (this.y + this.height < canvas.height) {
+      if (this.y + this.height < this.canvas.height) {
         this.y += 4;
-        if (this.y + this.height >= canvas.height) {
+        if (this.y + this.height >= this.canvas.height) {
           this.upDown = true;
         }
       }
@@ -138,3 +140,5 @@ class ObstacleRed extends Obstacle {
     }
   }
 }
+
+export { ObstaclePink, ObstacleYellow, ObstacleBlue, ObstacleRed };
