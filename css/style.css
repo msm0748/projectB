@@ -4,6 +4,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+#point {
+  height: 30px;
+  margin-bottom: 20px;
+}
 body {
   margin-top: 52px;
   width: 100%;
@@ -13,7 +17,6 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,8 +24,8 @@ body {
 }
 #canvas {
   position: relative;
-  width: 900px;
-  height: 336px;
+  width: 1000px;
+  height: 400px;
 }
 .modal {
   display: none;
@@ -35,21 +38,45 @@ body {
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.modal.rule2 {
+  background-image: url("../png/rule2.png");
+}
 .modal.on {
   display: block;
 }
-.modal i {
+.modal > * {
   position: absolute;
   z-index: 999;
+  cursor: pointer;
+}
+.modal .x_btn {
   width: 30px;
   height: 30px;
-  cursor: pointer;
   top: 35px;
   right: 230px;
   background-image: url("../x_btn.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+.modal .next_prev_btn {
+  top: 300px;
+  right: 230px;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  font-size: 16px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+}
+.modal .next_prev_btn::after {
+  content: "다음";
+}
+.modal .next_prev_btn.next::after {
+  content: "이전";
 }
 canvas {
   background: #eee;
@@ -67,10 +94,6 @@ canvas {
   border: none;
   font-size: 35px;
   padding: 10px 26px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin: 4px 2px;
   cursor: pointer;
   border-radius: 15px;
 }
@@ -79,7 +102,7 @@ canvas {
   color: #d8d8d8;
 }
 .btn .start {
-  margin-left: 50px;
+  margin-left: 60px;
   background-color: #77b934;
   color: black;
 }

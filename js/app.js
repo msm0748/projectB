@@ -12,12 +12,13 @@ const btns = document.querySelector(".btn");
 const btn = document.querySelector(".start");
 const rule = document.querySelector(".rule");
 const modal = document.querySelector(".modal");
-const x_btn = modal.querySelector(".x_btn");
+const xBtn = modal.querySelector(".x_btn");
+const nextPrevBtn = modal.querySelector(".next_prev_btn");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const point = document.getElementById("point");
 let reStart = false;
-point.innerText = 0;
+// point.innerText = 50;
 let ani;
 let aniReady;
 
@@ -41,7 +42,12 @@ function ready() {
 rule.addEventListener("click", function () {
   modal.classList.add("on");
 });
-x_btn.addEventListener("click", function () {
+nextPrevBtn.addEventListener("click", function(){
+  modal.classList.toggle("rule2");
+  nextPrevBtn.classList.toggle("next");
+  // nextPrevBtn
+})
+xBtn.addEventListener("click", function () {
   modal.classList.remove("on");
 });
 window.addEventListener("load", () => {
@@ -51,7 +57,7 @@ window.addEventListener("load", () => {
 function start() {
   cancelAnimationFrame(aniReady);
   btns.style.display = "none";
-  point.innerText = 0;
+  point.innerText = `남은 마릿수 50`;
   const hero = new Hero(canvas, ctx);
   const bgLayer = new BgLayer(canvas, ctx);
   let timer = 150;
@@ -118,7 +124,7 @@ function start() {
         // 좌측 화면에서 -20px 나가면 배열에서 삭제
         obstacleArr.splice(i, 1);
         pointNumber++;
-        point.innerText = pointNumber;
+        point.innerText = `남은 마릿수 ${50 - pointNumber}`;
       }
       if (obstacleArr[i]) {
         // 인덱스 값을 찾지 못해서 오류뜨는 걸 방지

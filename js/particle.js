@@ -12,7 +12,7 @@ const mouse = {
 
 ctx.fillStyle = "white";
 ctx.font = "20px Verdana";
-ctx.fillText("Thank you", 5, 30);
+ctx.fillText("Thank you", 11, 32);
 const textCoordinates = ctx.getImageData(0, 0, 150, 150); // 글씨 배경 사이즈
 
 class Particle {
