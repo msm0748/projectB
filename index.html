@@ -3,18 +3,33 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Nagarry's HTML5</title>
+    <title>피해보새</title>
     <link rel="stylesheet" href="css/style.css"> 
 </head>
 
 <body>
     <h2 id="point"></h2>
     <div id="canvas">
-        <div class="modal"><i class="x_btn"></i><button class="next_prev_btn"></button></div>
-        <canvas width="1000" height="400px"></canvas>
-        <div class="btn"><button class="rule">게임방법</button><button class="start">게임시작</button></div>
+        <div class="rule_modal"><i class="x_btn"></i><button class="next_prev_btn"></button></div>
+        <canvas width="1000px" height="400px"></canvas>
+        <div class="btn">
+            <button class="rule">게임방법</button>
+            <div class="dropdown">
+                <button class="game_difficulty text"></button>
+                <ul id="myDropdown" class="dropdown_content">
+                    <li>
+                        <input type="radio" name="difficulty" id="nomal" value="0">
+                        <label for="nomal">보통</label>            
+                    </li>
+                    <li>
+                        <input type="radio" name="difficulty" id="hard" value="1">
+                        <label for="hard">어려움</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <script src="js/app.js" type="module"></script>
+    <script src="js/app.js" type="module" defer></script>
 </body>
 
 </html>

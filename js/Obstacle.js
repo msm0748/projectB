@@ -43,15 +43,6 @@ class Obstacle {
       this.width,
       this.height
     );
-    // ctx.beginPath();
-    // ctx.strokeStyle = "white";
-    // ctx.lineWidth = 2;
-    // ctx.moveTo(this.x + 10, this.y + 21);
-    // ctx.lineTo(this.x + this.width - 15, this.y + 21);
-    // ctx.lineTo(this.x + this.width - 15, this.y + this.height - 17);
-    // ctx.lineTo(this.x + 10, this.y + this.height - 17);
-    // ctx.lineTo(this.x + 10, this.y + 21);
-    // ctx.stroke();
   }
   obstacleCrash(hero) {
     const x = this.x + 10 - hero.maxX; // 빈공간 충돌 방지를 위해 상세조정
@@ -61,13 +52,6 @@ class Obstacle {
     if (hero.shieldState === false) {
       if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {
         hero.gameOver = true;
-        // console.log(gameOver);
-        // cancelAnimationFrame(ani);
-        // ctx.drawImage(
-        //   deathImg,
-        //   0, 0, canvas.width, canvas.height
-        // )
-        // btn.removeAttribute("disabled");
       }
     }
   }

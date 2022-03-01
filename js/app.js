@@ -9,11 +9,13 @@ import BgLayer from "./bgLayer.js";
 import Shield from "./item.js";
 import { particleArray, mouse } from "./particle.js";
 const btns = document.querySelector(".btn");
-const btn = document.querySelector(".start");
-const rule = document.querySelector(".rule");
-const modal = document.querySelector(".modal");
-const xBtn = modal.querySelector(".x_btn");
-const nextPrevBtn = modal.querySelector(".next_prev_btn");
+const dropdown = document.querySelector(".dropdown");
+const gameDifficultyBtn = document.querySelector(".game_difficulty");
+const myDropdown = document.querySelector("#myDropdown");
+const ruleBtn = document.querySelector(".rule");
+const ruleModal = document.querySelector(".rule_modal");
+const xBtn = ruleModal.querySelector(".x_btn");
+const nextPrevBtn = ruleModal.querySelector(".next_prev_btn");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const point = document.getElementById("point");
@@ -25,7 +27,7 @@ let aniReady;
 function ready() {
   const bgLayer = new BgLayer(canvas, ctx);
   const readyhImg = new Image();
-  readyhImg.src = "png/ready.png";
+  readyhImg.src = "img/ready.png";
   function draw() {
     aniReady = requestAnimationFrame(draw);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -39,17 +41,48 @@ function ready() {
   }
   draw();
 }
-rule.addEventListener("click", function () {
-  modal.classList.add("on");
+ruleBtn.addEventListener("click", function () {
+  ruleModal.classList.add("on");
 });
-nextPrevBtn.addEventListener("click", function(){
-  modal.classList.toggle("rule2");
+nextPrevBtn.addEventListener("click", function () {
+  ruleModal.classList.toggle("rule2");
   nextPrevBtn.classList.toggle("next");
   // nextPrevBtn
-})
-xBtn.addEventListener("click", function () {
-  modal.classList.remove("on");
 });
+xBtn.addEventListener("click", function () {
+  ruleModal.classList.remove("on");
+});
+
+gameDifficultyBtn.addEventListener("click", function () {
+  dropdown.classList.toggle("on");
+});
+
+// 난이도 선택시 게임시작 활성화
+
+let nomalMode = [0, 150, 230, 260, 370];
+let hardMode = [150, 90, 200, 250, 350];
+let modeSelect;
+
+myDropdown.addEventListener("click", function () {
+  gameDifficultyBtn.classList.remove("text");
+  gameDifficultyBtn.innerText = "게임시작";
+  gameDifficultyBtn.classList.add("start");
+  const startBtn = document.querySelector(".start");
+  startBtn.onclick = function () {
+    const difficultValu = document.querySelector(
+      'input[name="difficulty"]:checked'
+    ).value;
+    if (difficultValu === "0") {
+      modeSelect = nomalMode;
+    } else if (difficultValu === "1") {
+      modeSelect = hardMode;
+    }
+    cancelAnimationFrame(ani);
+    start();
+    reStart = false;
+  };
+});
+
 window.addEventListener("load", () => {
   ready();
 });
@@ -60,7 +93,7 @@ function start() {
   point.innerText = `남은 마릿수 50`;
   const hero = new Hero(canvas, ctx);
   const bgLayer = new BgLayer(canvas, ctx);
-  let timer = 150;
+  let timer = modeSelect[0];
   let obstacleArr = [];
   let itemArr = [];
   let pointNumber = 0;
@@ -89,31 +122,31 @@ function start() {
 
   function handleObstacle() {
     const obPinkImg = new Image();
-    obPinkImg.src = "png/obPink.png";
+    obPinkImg.src = "img/obPink.png";
     const obYellowImg = new Image();
-    obYellowImg.src = "png/obYellow.png";
+    obYellowImg.src = "img/obYellow.png";
     const obBlueImg = new Image();
-    obBlueImg.src = "png/obBlue.png";
+    obBlueImg.src = "img/obBlue.png";
     const obRedImg = new Image();
-    obRedImg.src = "png/obRed.png";
+    obRedImg.src = "img/obRed.png";
     if (obstacleLenght < 50) {
       // 50마리만 배출
-      if (timer % 90 === 0) {
+      if (timer % modeSelect[1] === 0) {
         const obstaclePink = new ObstaclePink(canvas, ctx, obPinkImg, 6);
         obstacleArr.push(obstaclePink);
         obstacleLenght++;
       }
-      if (timer % 200 === 0) {
-        const obstacleYellow = new ObstacleYellow(canvas, ctx, obYellowImg, 8);
+      if (timer % modeSelect[2] === 0) {
+        const obstacleYellow = new ObstacleYellow(canvas, ctx, obYellowImg, 7);
         obstacleArr.push(obstacleYellow);
         obstacleLenght++;
       }
-      if (timer % 250 === 0) {
+      if (timer % modeSelect[3] === 0) {
         const obstacleBlue = new ObstacleBlue(canvas, ctx, obBlueImg, 5);
         obstacleArr.push(obstacleBlue);
         obstacleLenght++;
       }
-      if (timer % 350 === 0) {
+      if (timer % modeSelect[4] === 0) {
         const obstacleRed = new ObstacleRed(canvas, ctx, obRedImg, 6);
         obstacleArr.push(obstacleRed);
         obstacleLenght++;
@@ -161,7 +194,7 @@ function start() {
   function gameOver() {
     cancelAnimationFrame(ani);
     const deathImg = new Image();
-    deathImg.src = "png/death.png";
+    deathImg.src = "img/death.png";
     const deathImgWidth = 550;
     const deathImgHeight = 150;
     const imgX = canvas.width / 2 - deathImgWidth / 2;
@@ -215,11 +248,6 @@ function start() {
   });
 }
 
-btn.addEventListener("click", function () {
-  cancelAnimationFrame(ani);
-  start();
-  reStart = false;
-});
 document.addEventListener("keydown", function (e) {
   if (e.code === "Space") {
     if (reStart === true) {

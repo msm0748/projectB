@@ -1,5 +1,5 @@
 const bg = new Image();
-bg.src = "png/bg.png";
+bg.src = "img/bg.png";
 class BgLayer {
   constructor(canvas, ctx) {
     this.canvas = canvas;
@@ -27,10 +27,6 @@ class BgLayer {
   draw() {
     this.ctx.drawImage(bg, this.x, 0, this.bgWidth, this.canvas.height);
     this.ctx.drawImage(bg, this.x2, 0, this.bgWidth, this.canvas.height);
-    //   this.ctx.font = '48px serif'
-    //   this.ctx.textAlign = "center";
-    //   this.ctx.textBaseline = "middle";
-    //   this.ctx.fillText("-End-", this.canvasX, this.canvasY);
   }
 }
 export default BgLayer;

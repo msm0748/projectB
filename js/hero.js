@@ -1,7 +1,7 @@
 const heroImg = new Image();
 const heroShieldImg = new Image();
-heroImg.src = "png/sp.png";
-heroShieldImg.src = "png/sp_shield.png";
+heroImg.src = "img/sp.png";
+heroShieldImg.src = "img/sp_shield.png";
 
 export default class Hero {
   //주인공 셋팅
@@ -104,15 +104,6 @@ export default class Hero {
         this.width,
         this.height
       );
-      // this.ctx.beginPath();
-      // this.ctx.strokeStyle = "white";
-      // this.ctx.lineWidth = 2;
-      // this.ctx.moveTo(this.x, this.y);
-      // this.ctx.lineTo(this.x + this.width, this.y);
-      // this.ctx.lineTo(this.x + this.width, this.y + this.height - 10);
-      // this.ctx.lineTo(this.x, this.y + this.height - 10);
-      // this.ctx.lineTo(this.x, this.y);
-      // this.ctx.stroke();
     }
   }
 }

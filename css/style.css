@@ -9,11 +9,10 @@
   margin-bottom: 20px;
 }
 body {
-  margin-top: 52px;
+  margin-top: 10px;
   width: 100%;
   height: 90vh;
   background-color: #f6f9fc;
-  /* background-image: url("../bgi.png"); */
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -27,40 +26,40 @@ body {
   width: 1000px;
   height: 400px;
 }
-.modal {
+.rule_modal {
   display: none;
   position: absolute;
   z-index: 99;
-  width: 100%;
-  height: 100%;
-  background-image: url("../png/rule1.png");
+  width: 1000px;
+  height: 400px;
+  background-image: url("../img/rule1.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
 }
 
-.modal.rule2 {
-  background-image: url("../png/rule2.png");
+.rule_modal.rule2 {
+  background-image: url("../img/rule2.png");
 }
-.modal.on {
+.rule_modal.on {
   display: block;
 }
-.modal > * {
+.rule_modal > * {
   position: absolute;
   z-index: 999;
   cursor: pointer;
 }
-.modal .x_btn {
+.rule_modal .x_btn {
   width: 30px;
   height: 30px;
   top: 35px;
   right: 230px;
-  background-image: url("../x_btn.png");
+  background-image: url("../img/x_btn.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
-.modal .next_prev_btn {
+.rule_modal .next_prev_btn {
   top: 300px;
   right: 230px;
   background-color: #4caf50;
@@ -72,12 +71,21 @@ body {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
 }
-.modal .next_prev_btn::after {
+.rule_modal .next_prev_btn::after {
   content: "다음";
 }
-.modal .next_prev_btn.next::after {
+.rule_modal .next_prev_btn.next::after {
   content: "이전";
 }
+
+.difficult_modal {
+  position: absolute;
+  z-index: 99;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 canvas {
   background: #eee;
   position: absolute;
@@ -85,7 +93,7 @@ canvas {
 .btn {
   position: absolute;
   left: 50%;
-  bottom: 0;
+  top: 320px;
   transform: translate(-50%, -50%);
 }
 
@@ -101,8 +109,60 @@ canvas {
   background-color: #e5fde2;
   color: #d8d8d8;
 }
-.btn .start {
+.btn .game_difficulty {
   margin-left: 60px;
+  background-color: #e5fde2;
+  color: #d8d8d8;
+}
+.btn .rule:hover,
+.btn .game_difficulty:hover {
   background-color: #77b934;
   color: black;
+}
+.btn .game_difficulty.text::after {
+  content: "게임시작";
+}
+.dropdown {
+  display: inline-block;
+}
+
+.dropdown_content {
+  display: none;
+  position: absolute;
+  bottom: 64px;
+  right: 0;
+  background-color: #e5fde2;
+  min-width: 165px;
+  overflow: auto;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  z-index: 1;
+}
+
+.dropdown.on .dropdown_content {
+  display: block;
+}
+.dropdown.on .game_difficulty {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.dropdown.on .game_difficulty.text::after {
+  content: "난이도선택";
+  font-size: 28.3px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"] + label {
+  text-align: center;
+  font-size: 30px;
+  width: 100%;
+  display: block;
+}
+
+input[type="radio"]:checked + label {
+  background: #77b934;
 }

@@ -1,5 +1,5 @@
 const shieldImg = new Image();
-shieldImg.src = "png/shield.png";
+shieldImg.src = "img/shield.png";
 export default class Shield {
   constructor(canvas, ctx, speed) {
     this.canvas = canvas;
@@ -42,15 +42,6 @@ export default class Shield {
       this.width,
       this.height
     );
-    // this.ctx.beginPath();
-    // this.ctx.strokeStyle = "white";
-    // this.ctx.lineWidth = 2;
-    // this.ctx.moveTo(this.x + 5, this.y + 3);
-    // this.ctx.lineTo(this.x + this.width - 5, this.y + 3);
-    // this.ctx.lineTo(this.x + this.width - 5, this.y + this.height);
-    // this.ctx.lineTo(this.x + 5, this.y + this.height);
-    // this.ctx.lineTo(this.x + 5, this.y + 3);
-    // this.ctx.stroke();
   }
   itemCrash(hero, itemArr, i) {
     const x = this.x + 5 - hero.maxX;
@@ -58,11 +49,11 @@ export default class Shield {
     const y = this.y + 3 - hero.maxY;
     const y2 = hero.y - this.maxY;
     if (x < 0 && y < 0 && y2 < 0 && x2 < 0) {
-      hero.heroShieldImg.src = "png/sp_shield.png";
+      hero.heroShieldImg.src = "img/sp_shield.png";
       hero.shieldState = true;
       itemArr.splice(i, 1);
       setTimeout(() => {
-        hero.heroShieldImg.src = "png/sp_shield0.png";
+        hero.heroShieldImg.src = "img/sp_shield0.png";
       }, 4000);
       setTimeout(() => {
         hero.shieldState = false;
